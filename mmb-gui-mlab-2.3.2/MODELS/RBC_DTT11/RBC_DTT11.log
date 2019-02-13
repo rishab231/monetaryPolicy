@@ -1,0 +1,78 @@
+Starting Dynare (version 4.4.3).
+Starting preprocessing of the model file ...
+Substitution of endo leads >= 2: added 9 auxiliary variables and equations.
+Substitution of endo lags >= 2: added 14 auxiliary variables and equations.
+Found 53 equation(s).
+Evaluating expressions...done
+Computing static model derivatives:
+ - order 1
+Computing dynamic model derivatives:
+ - order 1
+ - order 2
+Processing outputs ...done
+Preprocessing completed.
+Starting MATLAB/Octave computing.
+
+EIGENVALUES:
+         Modulus             Real        Imaginary
+
+               0               -0                0
+               0                0                0
+               0                0                0
+               0                0                0
+               0                0                0
+               0                0                0
+               0                0                0
+               0                0                0
+               0                0                0
+               0                0                0
+               0                0                0
+               0                0                0
+               0                0                0
+               0                0                0
+       7.155e-23        7.155e-23                0
+       1.531e-17        1.531e-17                0
+       1.626e-17       -1.626e-17                0
+       3.444e-17       -3.444e-17                0
+       1.287e-13        1.287e-13                0
+       2.596e-10        2.596e-10                0
+       2.597e-10       -2.597e-10                0
+        1.99e-08        -1.99e-08                0
+        1.99e-08        -1.99e-08                0
+       3.979e-08        3.979e-08                0
+          0.3021           0.3021                0
+          0.7592           0.7592                0
+             0.9              0.9                0
+             0.9              0.9                0
+             0.9              0.9                0
+             0.9              0.9                0
+            1.01             1.01                0
+           1.284            1.284                0
+       1.157e+14        1.157e+14                0
+       5.369e+14       -5.369e+14                0
+       6.311e+15       -6.311e+15                0
+       3.417e+16        3.417e+16                0
+       3.579e+16        3.579e+16                0
+        1.31e+17        -1.31e+17                0
+       1.351e+17       -1.351e+17                0
+       2.555e+17        2.555e+17                0
+       5.594e+17        5.594e+17                0
+        5.71e+17        -5.71e+17                0
+       6.475e+17        6.475e+17                0
+       7.182e+17        7.182e+17                0
+       8.484e+17       -8.484e+17                0
+       8.591e+17        8.591e+17                0
+       9.203e+17       -9.203e+17                0
+       1.508e+18        1.508e+18                0
+       2.433e+19        2.433e+19                0
+       1.427e+45       -1.427e+45                0
+       5.005e+45        5.005e+45                0
+             Inf              Inf                0
+
+
+There are 22 eigenvalue(s) larger than 1 in modulus 
+for 22 forward-looking variable(s)
+
+The rank condition is verified.
+
+Total computing time : 0h00m01s

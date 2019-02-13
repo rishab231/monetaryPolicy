@@ -16,7 +16,7 @@ We can plot the following:
 	* Interest rate
 	* Output
 
-For $$n$$ periods, default is 20.
+For $n$ periods, default is 20.
 These are plotted for each and every model that we have selected.
 
 * We can also choose to *show* the **Unconditional variances** for these 4 variables for each and every model that we choose.

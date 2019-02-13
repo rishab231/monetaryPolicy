@@ -1,5 +1,6 @@
 # monetaryPolicy
 Repo for Econ project on 'Monetary Policy and PID Control'
+Author: Rishab Srivastava
 
 We can plot the following:
 * **Autocorrelation function** (confirm with Prof. Hawkins what this is?) and/or

@@ -5,25 +5,23 @@ function [residual, g1, g2, g3] = NK_AFL15_dynamic(y, x, params, steady_state, i
 % Inputs :
 %   y         [#dynamic variables by 1] double    vector of endogenous variables in the order stored
 %                                                 in M_.lead_lag_incidence; see the Manual
-%   x         [nperiods by M_.exo_nbr] double     matrix of exogenous variables (in declaration order)
+%   x         [M_.exo_nbr by nperiods] double     matrix of exogenous variables (in declaration order)
 %                                                 for all simulation periods
-%   steady_state  [M_.endo_nbr by 1] double       vector of steady state values
 %   params    [M_.param_nbr by 1] double          vector of parameter values in declaration order
 %   it_       scalar double                       time period for exogenous variables for which to evaluate the model
 %
 % Outputs:
 %   residual  [M_.endo_nbr by 1] double    vector of residuals of the dynamic model equations in order of 
-%                                          declaration of the equations.
-%                                          Dynare may prepend auxiliary equations, see M_.aux_vars
+%                                          declaration of the equations
 %   g1        [M_.endo_nbr by #dynamic variables] double    Jacobian matrix of the dynamic model equations;
 %                                                           rows: equations in order of declaration
-%                                                           columns: variables in order stored in M_.lead_lag_incidence followed by the ones in M_.exo_names
+%                                                           columns: variables in order stored in M_.lead_lag_incidence
 %   g2        [M_.endo_nbr by (#dynamic variables)^2] double   Hessian matrix of the dynamic model equations;
 %                                                              rows: equations in order of declaration
-%                                                              columns: variables in order stored in M_.lead_lag_incidence followed by the ones in M_.exo_names
+%                                                              columns: variables in order stored in M_.lead_lag_incidence
 %   g3        [M_.endo_nbr by (#dynamic variables)^3] double   Third order derivative matrix of the dynamic model equations;
 %                                                              rows: equations in order of declaration
-%                                                              columns: variables in order stored in M_.lead_lag_incidence followed by the ones in M_.exo_names
+%                                                              columns: variables in order stored in M_.lead_lag_incidence
 %
 %
 % Warning : this file is generated automatically by Dynare
@@ -39,10 +37,13 @@ T266 = 1-params(75)*(y(33)/y(2)-params(77));
 T279 = params(75)/2;
 T281 = T279*(y(33)/y(2)-params(77))^2;
 T282 = 1-params(77)+y(33)*params(75)*(y(33)/y(2)-params(77))/y(2)-T281;
-T294 = y(2)^params(72);
+T295 = y(35)*exp(y(70))*y(2)^params(72);
 T296 = y(31)^(1-params(72));
 T300 = params(78)/params(67);
+T301 = T295*T296*T300;
 T304 = y(30)-(params(78)-1)/params(78);
+T332 = exp(y(70))*y(2)^params(72);
+T333 = T296*T332;
 T346 = 1-1/y(26)*(y(42)+params(80))/(2-params(79)+params(86)*(1+params(79)));
 T347 = y(32)*T346;
 T363 = (params(80)+y(107)-(params(80)+y(107))/(2-params(79)))^2/(params(80)*8);
@@ -53,10 +54,52 @@ T446 = T279*(y(56)/y(3)-params(77))^2;
 T447 = 1-params(77)+y(56)*params(75)*(y(56)/y(3)-params(77))/y(3)-T446;
 T476 = exp(y(70))*y(3)^params(72);
 T477 = y(54)^(1-params(72));
+T478 = T476*T477;
 T485 = 1-1/y(49)*(params(80)+y(65))/(2-params(79)+params(86)*(1+params(79)));
 T486 = y(55)*T485;
 T499 = (params(80)+y(112)-(params(80)+y(112))/(2-params(79)))^2/(params(80)*8);
 T501 = T499*y(108);
+T706 = (-((y(42)+params(80))*T3/(y(26)*y(26))/(2-params(79)+params(86)*(1+params(79)))));
+T707 = y(32)*T706;
+T722 = (-y(33))/(y(2)*y(2));
+T724 = (-(params(75)*T722));
+T725 = getPowerDeriv(T266,T3,1);
+T728 = y(33)*params(75)*T722;
+T732 = 2*(y(33)/y(2)-params(77));
+T734 = T279*T722*T732;
+T735 = (y(2)*T728-y(33)*params(75)*(y(33)/y(2)-params(77)))/(y(2)*y(2))-T734;
+T743 = (-(T304*T300*T296*y(35)*exp(y(70))*getPowerDeriv(y(2),params(72),1)));
+T777 = getPowerDeriv(y(31),1-params(72),1);
+T801 = 1/y(2);
+T802 = params(75)*T801;
+T803 = (-T802);
+T807 = params(75)*(y(33)/y(2)-params(77))+y(33)*T802;
+T810 = T279*T732*T801;
+T852 = (-(1/y(26)/(2-params(79)+params(86)*(1+params(79)))));
+T853 = y(32)*T852;
+T865 = 1-1/(2-params(79));
+T868 = T865*2*(params(80)+y(107)-(params(80)+y(107))/(2-params(79)))/(params(80)*8);
+T869 = y(103)*T868;
+T888 = (-((params(80)+y(65))*T3/(y(49)*y(49))/(2-params(79)+params(86)*(1+params(79)))));
+T889 = y(55)*T888;
+T904 = (-y(56))/(y(3)*y(3));
+T906 = (-(params(75)*T904));
+T907 = getPowerDeriv(T434,T3,1);
+T910 = y(56)*params(75)*T904;
+T914 = 2*(y(56)/y(3)-params(77));
+T916 = T279*T904*T914;
+T917 = (y(3)*T910-y(56)*params(75)*(y(56)/y(3)-params(77)))/(y(3)*y(3))-T916;
+T978 = 1/y(3);
+T979 = params(75)*T978;
+T980 = (-T979);
+T984 = params(75)*(y(56)/y(3)-params(77))+y(56)*T979;
+T987 = T279*T914*T978;
+T1022 = (-(1/y(49)/(2-params(79)+params(86)*(1+params(79)))));
+T1023 = y(55)*T1022;
+T1032 = T865*2*(params(80)+y(112)-(params(80)+y(112))/(2-params(79)))/(params(80)*8);
+T1033 = y(108)*T1032;
+T1219 = T279*(T732*(-((-y(33))*(y(2)+y(2))))/(y(2)*y(2)*y(2)*y(2))+T722*2*T722);
+T1455 = T279*(T914*(-((-y(56))*(y(3)+y(3))))/(y(3)*y(3)*y(3)*y(3))+T904*2*T904);
 lhs =y(75);
 rhs =400*(log(y(26))-log(params(43)));
 residual(1)= lhs-rhs;
@@ -121,7 +164,7 @@ lhs =y(34);
 rhs =y(28)+y(32)*T282;
 residual(21)= lhs-rhs;
 lhs =y(25)*y(35)*(y(25)-params(41));
-rhs =params(70)*y(105)*y(102)*(y(102)-params(41))+y(35)*exp(y(70))*T294*T296*T300*T304;
+rhs =params(70)*y(105)*y(102)*(y(102)-params(41))+T301*T304;
 residual(22)= lhs-rhs;
 lhs =y(27);
 rhs =y(33)+y(2)*(1-params(77))-y(2)*T281;
@@ -136,7 +179,7 @@ lhs =y(46);
 rhs =y(27)*y(32)*y(42)*params(86)*y(43);
 residual(26)= lhs-rhs;
 lhs =y(29);
-rhs =T296*exp(y(70))*T294;
+rhs =T333;
 residual(27)= lhs-rhs;
 lhs =y(39);
 rhs =y(2)*T347;
@@ -202,7 +245,7 @@ lhs =y(69);
 rhs =y(50)*y(55)*y(65)*params(86)*y(66);
 residual(48)= lhs-rhs;
 lhs =y(52);
-rhs =T476*T477;
+rhs =T478;
 residual(49)= lhs-rhs;
 lhs =y(62);
 rhs =y(3)*T486;
@@ -298,47 +341,6 @@ if nargout >= 2,
   % Jacobian matrix
   %
 
-T706 = (-((y(42)+params(80))*T3/(y(26)*y(26))/(2-params(79)+params(86)*(1+params(79)))));
-T707 = y(32)*T706;
-T722 = (-y(33))/(y(2)*y(2));
-T724 = (-(params(75)*T722));
-T725 = getPowerDeriv(T266,T3,1);
-T728 = y(33)*params(75)*T722;
-T732 = 2*(y(33)/y(2)-params(77));
-T734 = T279*T722*T732;
-T735 = (y(2)*T728-y(33)*params(75)*(y(33)/y(2)-params(77)))/(y(2)*y(2))-T734;
-T738 = getPowerDeriv(y(2),params(72),1);
-T777 = getPowerDeriv(y(31),1-params(72),1);
-T801 = 1/y(2);
-T802 = params(75)*T801;
-T803 = (-T802);
-T807 = params(75)*(y(33)/y(2)-params(77))+y(33)*T802;
-T810 = T279*T732*T801;
-T852 = (-(1/y(26)/(2-params(79)+params(86)*(1+params(79)))));
-T853 = y(32)*T852;
-T865 = 1-1/(2-params(79));
-T868 = T865*2*(params(80)+y(107)-(params(80)+y(107))/(2-params(79)))/(params(80)*8);
-T869 = y(103)*T868;
-T888 = (-((params(80)+y(65))*T3/(y(49)*y(49))/(2-params(79)+params(86)*(1+params(79)))));
-T889 = y(55)*T888;
-T904 = (-y(56))/(y(3)*y(3));
-T906 = (-(params(75)*T904));
-T907 = getPowerDeriv(T434,T3,1);
-T910 = y(56)*params(75)*T904;
-T914 = 2*(y(56)/y(3)-params(77));
-T916 = T279*T904*T914;
-T917 = (y(3)*T910-y(56)*params(75)*(y(56)/y(3)-params(77)))/(y(3)*y(3))-T916;
-T925 = exp(y(70))*getPowerDeriv(y(3),params(72),1);
-T958 = getPowerDeriv(y(54),1-params(72),1);
-T978 = 1/y(3);
-T979 = params(75)*T978;
-T980 = (-T979);
-T984 = params(75)*(y(56)/y(3)-params(77))+y(56)*T979;
-T987 = T279*T914*T978;
-T1022 = (-(1/y(49)/(2-params(79)+params(86)*(1+params(79)))));
-T1023 = y(55)*T1022;
-T1032 = T865*2*(params(80)+y(112)-(params(80)+y(112))/(2-params(79)))/(params(80)*8);
-T1033 = y(108)*T1032;
   g1(1,26)=(-(400*1/y(26)));
   g1(1,75)=1;
   g1(2,1)=(-(100*1/y(1)));
@@ -434,12 +436,12 @@ T1033 = y(108)*T1032;
   g1(21,34)=1;
   g1(22,25)=y(25)*y(35)+y(35)*(y(25)-params(41));
   g1(22,102)=(-(params(70)*y(105)*y(102)+params(70)*y(105)*(y(102)-params(41))));
-  g1(22,2)=(-(T304*T300*T296*y(35)*exp(y(70))*T738));
-  g1(22,30)=(-(y(35)*exp(y(70))*T294*T296*T300));
-  g1(22,31)=(-(T304*T300*y(35)*exp(y(70))*T294*T777));
-  g1(22,35)=y(25)*(y(25)-params(41))-T304*T300*T296*exp(y(70))*T294;
+  g1(22,2)=T743;
+  g1(22,30)=(-T301);
+  g1(22,31)=(-(T304*T300*T295*T777));
+  g1(22,35)=y(25)*(y(25)-params(41))-T304*T300*T333;
   g1(22,105)=(-((y(102)-params(41))*params(70)*y(102)));
-  g1(22,70)=(-(y(35)*exp(y(70))*T294*T296*T300*T304));
+  g1(22,70)=(-(T301*T304));
   g1(23,2)=(-(1-params(77)-(T281+y(2)*T734)));
   g1(23,27)=1;
   g1(23,33)=(-(1-y(2)*T810));
@@ -456,10 +458,10 @@ T1033 = y(108)*T1032;
   g1(26,42)=(-(y(27)*y(32)*params(86)*y(43)));
   g1(26,43)=(-(y(27)*y(32)*y(42)*params(86)));
   g1(26,46)=1;
-  g1(27,2)=(-(T296*exp(y(70))*T738));
+  g1(27,2)=(-(T296*exp(y(70))*getPowerDeriv(y(2),params(72),1)));
   g1(27,29)=1;
-  g1(27,31)=(-(exp(y(70))*T294*T777));
-  g1(27,70)=(-(T296*exp(y(70))*T294));
+  g1(27,31)=(-(T332*T777));
+  g1(27,70)=(-T333);
   g1(28,26)=(-(y(2)*T707));
   g1(28,2)=(-T347);
   g1(28,32)=(-(y(2)*T346));
@@ -538,10 +540,10 @@ T1033 = y(108)*T1032;
   g1(48,65)=(-(y(50)*y(55)*params(86)*y(66)));
   g1(48,66)=(-(y(50)*y(55)*params(86)*y(65)));
   g1(48,69)=1;
-  g1(49,3)=(-(T477*T925));
+  g1(49,3)=(-(T477*exp(y(70))*getPowerDeriv(y(3),params(72),1)));
   g1(49,52)=1;
-  g1(49,54)=(-(T476*T958));
-  g1(49,70)=(-(T476*T477));
+  g1(49,54)=(-(T476*getPowerDeriv(y(54),1-params(72),1)));
+  g1(49,70)=(-T478);
   g1(50,49)=(-(y(3)*T889));
   g1(50,3)=(-T486);
   g1(50,55)=(-(y(3)*T485));
@@ -615,21 +617,13 @@ T1033 = y(108)*T1032;
   g1(77,100)=1;
   g1(78,22)=T3;
   g1(78,101)=1;
-
+end
 if nargout >= 3,
   %
   % Hessian matrix
   %
 
   v2 = zeros(255,3);
-T1179 = getPowerDeriv(T266,T3,2);
-T1180 = T724*T1179;
-T1219 = T279*(T732*(-((-y(33))*(y(2)+y(2))))/(y(2)*y(2)*y(2)*y(2))+T722*2*T722);
-T1247 = getPowerDeriv(y(2),params(72),2);
-T1259 = getPowerDeriv(y(31),1-params(72),2);
-T1419 = getPowerDeriv(T434,T3,2);
-T1420 = T906*T1419;
-T1455 = T279*(T914*(-((-y(56))*(y(3)+y(3))))/(y(3)*y(3)*y(3)*y(3))+T904*2*T904);
   v2(1,1)=1;
   v2(1,2)=3201;
   v2(1,3)=(-(400*T3/(y(26)*y(26))));
@@ -737,16 +731,16 @@ T1455 = T279*(T914*(-((-y(56))*(y(3)+y(3))))/(y(3)*y(3)*y(3)*y(3))+T904*2*T904);
   v2(35,3)=  v2(34,3);
   v2(36,1)=19;
   v2(36,2)=129;
-  v2(36,3)=(-(T725*(-(params(75)*(-((-y(33))*(y(2)+y(2))))/(y(2)*y(2)*y(2)*y(2))))+T724*T1180));
+  v2(36,3)=(-(T725*(-(params(75)*(-((-y(33))*(y(2)+y(2))))/(y(2)*y(2)*y(2)*y(2))))+T724*T724*getPowerDeriv(T266,T3,2)));
   v2(37,1)=19;
   v2(37,2)=4066;
-  v2(37,3)=(-(T803*T1180+T725*(-(params(75)*T3/(y(2)*y(2))))));
+  v2(37,3)=(-(T803*T724*getPowerDeriv(T266,T3,2)+T725*(-(params(75)*T3/(y(2)*y(2))))));
   v2(38,1)=19;
   v2(38,2)=160;
   v2(38,3)=  v2(37,3);
   v2(39,1)=19;
   v2(39,2)=4097;
-  v2(39,3)=(-(T803*T803*T1179));
+  v2(39,3)=(-(T803*T803*getPowerDeriv(T266,T3,2)));
   v2(40,1)=20;
   v2(40,2)=12929;
   v2(40,3)=(-((-y(42))*(y(102)+y(102))))/(y(102)*y(102)*y(102)*y(102));
@@ -797,28 +791,28 @@ T1455 = T279*(T914*(-((-y(56))*(y(3)+y(3))))/(y(3)*y(3)*y(3)*y(3))+T904*2*T904);
   v2(55,3)=(-(params(70)*y(105)+params(70)*y(105)));
   v2(56,1)=22;
   v2(56,2)=129;
-  v2(56,3)=(-(T304*T300*T296*y(35)*exp(y(70))*T1247));
+  v2(56,3)=(-(T304*T300*T296*y(35)*exp(y(70))*getPowerDeriv(y(2),params(72),2)));
   v2(57,1)=22;
   v2(57,2)=3685;
-  v2(57,3)=(-(T300*T296*y(35)*exp(y(70))*T738));
+  v2(57,3)=(-(T300*T296*y(35)*exp(y(70))*getPowerDeriv(y(2),params(72),1)));
   v2(58,1)=22;
   v2(58,2)=157;
   v2(58,3)=  v2(57,3);
   v2(59,1)=22;
   v2(59,2)=3812;
-  v2(59,3)=(-(T304*T300*y(35)*exp(y(70))*T738*T777));
+  v2(59,3)=(-(T304*T300*y(35)*exp(y(70))*getPowerDeriv(y(2),params(72),1)*T777));
   v2(60,1)=22;
   v2(60,2)=158;
   v2(60,3)=  v2(59,3);
   v2(61,1)=22;
   v2(61,2)=3840;
-  v2(61,3)=(-(T300*y(35)*exp(y(70))*T294*T777));
+  v2(61,3)=(-(T300*T295*T777));
   v2(62,1)=22;
   v2(62,2)=3714;
   v2(62,3)=  v2(61,3);
   v2(63,1)=22;
   v2(63,2)=3841;
-  v2(63,3)=(-(T304*T300*y(35)*exp(y(70))*T294*T1259));
+  v2(63,3)=(-(T304*T300*T295*getPowerDeriv(y(31),1-params(72),2)));
   v2(64,1)=22;
   v2(64,2)=4343;
   v2(64,3)=y(25)+y(25)-params(41);
@@ -827,19 +821,19 @@ T1455 = T279*(T914*(-((-y(56))*(y(3)+y(3))))/(y(3)*y(3)*y(3)*y(3))+T904*2*T904);
   v2(65,3)=  v2(64,3);
   v2(66,1)=22;
   v2(66,2)=4320;
-  v2(66,3)=(-(T304*T300*T296*exp(y(70))*T738));
+  v2(66,3)=(-(T304*T300*T296*exp(y(70))*getPowerDeriv(y(2),params(72),1)));
   v2(67,1)=22;
   v2(67,2)=162;
   v2(67,3)=  v2(66,3);
   v2(68,1)=22;
   v2(68,2)=4348;
-  v2(68,3)=(-(T300*T296*exp(y(70))*T294));
+  v2(68,3)=(-(T300*T333));
   v2(69,1)=22;
   v2(69,2)=3718;
   v2(69,3)=  v2(68,3);
   v2(70,1)=22;
   v2(70,2)=4349;
-  v2(70,3)=(-(T304*T300*exp(y(70))*T294*T777));
+  v2(70,3)=(-(T304*T300*T332*T777));
   v2(71,1)=22;
   v2(71,2)=3845;
   v2(71,3)=  v2(70,3);
@@ -851,31 +845,31 @@ T1455 = T279*(T914*(-((-y(56))*(y(3)+y(3))))/(y(3)*y(3)*y(3)*y(3))+T904*2*T904);
   v2(73,3)=  v2(72,3);
   v2(74,1)=22;
   v2(74,2)=8765;
-  v2(74,3)=(-(T304*T300*T296*y(35)*exp(y(70))*T738));
+  v2(74,3)=T743;
   v2(75,1)=22;
   v2(75,2)=197;
   v2(75,3)=  v2(74,3);
   v2(76,1)=22;
   v2(76,2)=8793;
-  v2(76,3)=(-(y(35)*exp(y(70))*T294*T296*T300));
+  v2(76,3)=(-T301);
   v2(77,1)=22;
   v2(77,2)=3753;
   v2(77,3)=  v2(76,3);
   v2(78,1)=22;
   v2(78,2)=8794;
-  v2(78,3)=(-(T304*T300*y(35)*exp(y(70))*T294*T777));
+  v2(78,3)=(-(T304*T300*T295*T777));
   v2(79,1)=22;
   v2(79,2)=3880;
   v2(79,3)=  v2(78,3);
   v2(80,1)=22;
   v2(80,2)=8798;
-  v2(80,3)=(-(T304*T300*T296*exp(y(70))*T294));
+  v2(80,3)=(-(T304*T300*T333));
   v2(81,1)=22;
   v2(81,2)=4388;
   v2(81,3)=  v2(80,3);
   v2(82,1)=22;
   v2(82,2)=8833;
-  v2(82,3)=(-(y(35)*exp(y(70))*T294*T296*T300*T304));
+  v2(82,3)=(-(T301*T304));
   v2(83,1)=23;
   v2(83,2)=129;
   v2(83,3)=T734+T734+y(2)*T1219;
@@ -929,31 +923,31 @@ T1455 = T279*(T914*(-((-y(56))*(y(3)+y(3))))/(y(3)*y(3)*y(3)*y(3))+T904*2*T904);
   v2(99,3)=  v2(98,3);
   v2(100,1)=27;
   v2(100,2)=129;
-  v2(100,3)=(-(T296*exp(y(70))*T1247));
+  v2(100,3)=(-(T296*exp(y(70))*getPowerDeriv(y(2),params(72),2)));
   v2(101,1)=27;
   v2(101,2)=3812;
-  v2(101,3)=(-(exp(y(70))*T738*T777));
+  v2(101,3)=(-(exp(y(70))*getPowerDeriv(y(2),params(72),1)*T777));
   v2(102,1)=27;
   v2(102,2)=158;
   v2(102,3)=  v2(101,3);
   v2(103,1)=27;
   v2(103,2)=3841;
-  v2(103,3)=(-(exp(y(70))*T294*T1259));
+  v2(103,3)=(-(T332*getPowerDeriv(y(31),1-params(72),2)));
   v2(104,1)=27;
   v2(104,2)=8765;
-  v2(104,3)=(-(T296*exp(y(70))*T738));
+  v2(104,3)=(-(T296*exp(y(70))*getPowerDeriv(y(2),params(72),1)));
   v2(105,1)=27;
   v2(105,2)=197;
   v2(105,3)=  v2(104,3);
   v2(106,1)=27;
   v2(106,2)=8794;
-  v2(106,3)=(-(exp(y(70))*T294*T777));
+  v2(106,3)=(-(T332*T777));
   v2(107,1)=27;
   v2(107,2)=3880;
   v2(107,3)=  v2(106,3);
   v2(108,1)=27;
   v2(108,2)=8833;
-  v2(108,3)=(-(T296*exp(y(70))*T294));
+  v2(108,3)=(-T333);
   v2(109,1)=28;
   v2(109,2)=3201;
   v2(109,3)=(-(y(2)*y(32)*(-((y(42)+params(80))*(y(26)+y(26))/(y(26)*y(26)*y(26)*y(26))/(2-params(79)+params(86)*(1+params(79)))))));
@@ -1136,16 +1130,16 @@ T1455 = T279*(T914*(-((-y(56))*(y(3)+y(3))))/(y(3)*y(3)*y(3)*y(3))+T904*2*T904);
   v2(168,3)=  v2(167,3);
   v2(169,1)=42;
   v2(169,2)=257;
-  v2(169,3)=(-(T907*(-(params(75)*(-((-y(56))*(y(3)+y(3))))/(y(3)*y(3)*y(3)*y(3))))+T906*T1420));
+  v2(169,3)=(-(T907*(-(params(75)*(-((-y(56))*(y(3)+y(3))))/(y(3)*y(3)*y(3)*y(3))))+T906*T906*getPowerDeriv(T434,T3,2)));
   v2(170,1)=42;
   v2(170,2)=6988;
-  v2(170,3)=(-(T980*T1420+T907*(-(params(75)*T3/(y(3)*y(3))))));
+  v2(170,3)=(-(T980*T906*getPowerDeriv(T434,T3,2)+T907*(-(params(75)*T3/(y(3)*y(3))))));
   v2(171,1)=42;
   v2(171,2)=310;
   v2(171,3)=  v2(170,3);
   v2(172,1)=42;
   v2(172,2)=7041;
-  v2(172,3)=(-(T980*T980*T1419));
+  v2(172,3)=(-(T980*T980*getPowerDeriv(T434,T3,2)));
   v2(173,1)=43;
   v2(173,2)=6913;
   v2(173,3)=(-((-((-y(109))*(y(55)+y(55))))/(y(55)*y(55)*y(55)*y(55))));
@@ -1250,7 +1244,7 @@ T1455 = T279*(T914*(-((-y(56))*(y(3)+y(3))))/(y(3)*y(3)*y(3)*y(3))+T904*2*T904);
   v2(206,3)=(-(T477*exp(y(70))*getPowerDeriv(y(3),params(72),2)));
   v2(207,1)=49;
   v2(207,2)=6734;
-  v2(207,3)=(-(T925*T958));
+  v2(207,3)=(-(exp(y(70))*getPowerDeriv(y(3),params(72),1)*getPowerDeriv(y(54),1-params(72),1)));
   v2(208,1)=49;
   v2(208,2)=308;
   v2(208,3)=  v2(207,3);
@@ -1259,19 +1253,19 @@ T1455 = T279*(T914*(-((-y(56))*(y(3)+y(3))))/(y(3)*y(3)*y(3)*y(3))+T904*2*T904);
   v2(209,3)=(-(T476*getPowerDeriv(y(54),1-params(72),2)));
   v2(210,1)=49;
   v2(210,2)=8766;
-  v2(210,3)=(-(T477*T925));
+  v2(210,3)=(-(T477*exp(y(70))*getPowerDeriv(y(3),params(72),1)));
   v2(211,1)=49;
   v2(211,2)=324;
   v2(211,3)=  v2(210,3);
   v2(212,1)=49;
   v2(212,2)=8817;
-  v2(212,3)=(-(T476*T958));
+  v2(212,3)=(-(T476*getPowerDeriv(y(54),1-params(72),1)));
   v2(213,1)=49;
   v2(213,2)=6801;
   v2(213,3)=  v2(212,3);
   v2(214,1)=49;
   v2(214,2)=8833;
-  v2(214,3)=(-(T476*T477));
+  v2(214,3)=(-T478);
   v2(215,1)=50;
   v2(215,2)=6145;
   v2(215,3)=(-(y(3)*y(55)*(-((params(80)+y(65))*(y(49)+y(49))/(y(49)*y(49)*y(49)*y(49))/(2-params(79)+params(86)*(1+params(79)))))));
@@ -1396,13 +1390,12 @@ T1455 = T279*(T914*(-((-y(56))*(y(3)+y(3))))/(y(3)*y(3)*y(3)*y(3))+T904*2*T904);
   v2(255,2)=8194;
   v2(255,3)=  v2(254,3);
   g2 = sparse(v2(:,1),v2(:,2),v2(:,3),78,16129);
+end
 if nargout >= 4,
   %
   % Third order derivatives
   %
 
   g3 = sparse([],[],[],78,2048383);
-end
-end
 end
 end

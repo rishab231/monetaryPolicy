@@ -12,6 +12,7 @@ end
 %%%%%%%%%%%%%%%%%%% Declaration of key global variables
 warning('off','all')
 
+load('../scripts/variables.mat')
 global names;                             % List of model names
 global variabledim;                       % List of dimensions of original shocks of each model 
 global mycolor;                           % List models colors used for plots
@@ -326,7 +327,7 @@ rulenames = char(['User specified rule                  ' %rule_number 1
                   'Orphanides and Wieland (2013)        ' %            9
                   'Coenen et al. (2012)                 ' %            10
                   'Christiano, Motto, Rostagno (2014)   ' %            11
-                 %'New common rule                     ' %            rn           
+                  'Hawkins PID Rule                     ' %            rn           
                   ]);     
          
  rulenamesshort = char(['User rule   ' %rule_number 1
@@ -340,7 +341,7 @@ rulenames = char(['User specified rule                  ' %rule_number 1
                         'OW13 rule   ' %            9
                         'Coenen rule ' %            10
                         'CMR rule    ' %            11
-                       %'New common rule' %         rn           
+                        'PID Rule    ' %         rn           
                   ]);    
 rulenamesshort1 = char(['User_Rule   ' %rule_number 1
                         'Model_Rule  ' %            2
@@ -353,10 +354,10 @@ rulenamesshort1 = char(['User_Rule   ' %rule_number 1
                         'OW13_Rule   ' %            9
                         'Coenen_Rule ' %            10
                         'CMR_Rule    ' %            11
-                       %'New common rule' %         rn           
+                        'PID Rule    ' %         rn (12)          
                   ]); 
 %rule colors
-myrulecolor = char(':b','g','b','c','m','r','k',':r',':g','k-.','b-.');              
+myrulecolor = char(':b','g','b','c','m','r','k',':r',':g','k-.','b-.', 'b');              
 
 % List of numbers of models according to having a model-specific rule implemented
 model_with_rule=[2 3 4 5 6 7 10 11 14    18 19 20 21 22 24 25 26 27 29 31 ...
@@ -623,7 +624,16 @@ rule=zeros(Number_rule,1);
             % common_rule(rn,32) = 1;
             % common_rule(rn,33) = 0.25;
        
-
+            % Hawkins' PID Rule defined below
+            %common_rule(12,1) =  0; common_rule(12,2) = 0; common_rule(12,3) = 0; common_rule(12,4) = 0;
+            %common_rule(12,5) = 1.5/4; common_rule(12,6) = 1.5/4; common_rule(12,7) = 1.5/4; common_rule(12,8) = 1.5/4; common_rule(12,9) = 0;
+            %common_rule(12,10) = 0; common_rule(12,11) = 0; common_rule(12,12) = 0; common_rule(12,13) = 0;
+            %common_rule(12,14) = 0.5;common_rule(12,15) = 0; common_rule(12,16) = 0; common_rule(12,17) = 0; common_rule(12,18) = 0;
+            %common_rule(12,19) = 0; common_rule(12,20) = 0; common_rule(12,21) = 0; common_rule(12,22) = 0;
+            %common_rule(12,23) = 0; common_rule(12,24) = 0;common_rule(12,25) = 0;common_rule(12,26) = 0;common_rule(12, 27) = 0;
+            %common_rule(12,28) = 0; common_rule(12,29) = 0;common_rule(12,30) = 0;common_rule(12,31) = 0;
+            %common_rule(12,32) = 1;
+            %common_rule(12,33) = 0.25;
 %%
 data =[NaN 0 0 0;0 0 0 0;0 0 0 0;0 0 0 0;...
     0 0 0 0;NaN 0 0 0;NaN 0 0 0;NaN 0 0 0;NaN 0 0 0];
@@ -652,4 +662,39 @@ javaaddpath([currentpath num2str('/MMB_OPTIONS/xlwrite/poi_library/dom4j-1.6.1.j
 javaaddpath([currentpath num2str('/MMB_OPTIONS/xlwrite/poi_library/stax-api-1.0.1.jar')]);
 end
 cd(newpath);
-run MAINMENU
+%run MAINMENU
+
+
+% Setting our coefficients for the Hawkins PID Rule
+for j=1:33
+    common_rule(12, j) = coefficients(j);
+end
+
+% Only using Model 1
+for j=modelStart:modelEnd
+  modelsvec(j,1)=1;
+end
+for j=69:79 % Remove AL models.
+  modelsvec(j,1)=0;
+end
+for j=19:22 % Remove US_ACEL models because of epsilon collision.
+  modelsvec(j,1)=0;
+end
+
+% Additionally removing some models because of epsilon collision.
+modelsvec(27,1)=0;  % Remove US_DG08 model because of epsilon collision.
+modelsvec(59,1)=0;  % Remove NK_KRS12 model because of epsilon collision.
+modelsvec(65,1)=0;  % Remove NK_GK11 model because of epsilon collision.
+modelsvec(68,1)=0;  % Remove EA_QR14 model because of epsilon collision.
+modelsvec(81,1)=0;  % Remove NK_GK13 model because of epsilon collision.
+modelsvec(97,1)=0;  % Remove NK_KW16 model because of epsilon collision.
+modelsvec(98,1)=0;  % Remove NK_MPT10 model because of epsilon collision.
+
+rule(12,1)=1;       % Hawkins' PID specified Rule
+shocks(1,1)=1;      % Monetary policy shock 
+option5=1;          % Show the unconditional variance in the Matlab console (1)
+option1=1;          % Show IRF chart
+option2=1;          % Show ACF chart
+
+MMBOPT1
+

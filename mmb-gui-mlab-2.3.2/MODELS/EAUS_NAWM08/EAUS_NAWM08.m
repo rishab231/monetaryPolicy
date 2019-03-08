@@ -12,9 +12,9 @@ dseries('initialize');
 global M_ options_ oo_ estim_params_ bayestopt_ dataset_ dataset_info estimation_info ys0_ ex0_
 options_ = [];
 M_.fname = 'EAUS_NAWM08';
-M_.dynare_version = '4.5.3';
-oo_.dynare_version = '4.5.3';
-options_.dynare_version = '4.5.3';
+M_.dynare_version = '4.5.6';
+oo_.dynare_version = '4.5.6';
+options_.dynare_version = '4.5.6';
 %
 % Some global variables initialization
 %
@@ -1580,6 +1580,7 @@ erase_compiled_function('EAUS_NAWM08_dynamic');
 M_.orig_eq_nbr = 233;
 M_.eq_nbr = 279;
 M_.ramsey_eq_nbr = 0;
+M_.set_auxiliary_variables = exist(['./' M_.fname '_set_auxiliary_variables.m'], 'file') == 2;
 M_.lead_lag_incidence = [
  0 134 0;
  1 135 0;
@@ -2440,6 +2441,9 @@ end
 if M_.exo_det_nbr > 0
 	oo_.exo_det_simul = ones(M_.maximum_lag,1)*oo_.exo_det_steady_state';
 end
+options_.solve_algo = 3;
+options_.steady.maxit = 50000;
+steady;
 %
 % SHOCKS instructions
 %

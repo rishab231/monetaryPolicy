@@ -32,6 +32,8 @@ global option5;
 global option6;
 global AL_Models;
 global OSenvironment;
+global unconditionalVariances;
+unconditionalVariances = [0 0 0 0];
 
 modelbase.exercise=1;
 modelbase.names =names;
@@ -280,18 +282,21 @@ if modelbase.option(5) == 1
             %Plotting the variance of interest rate
             vname='Interest ';
             var = modelbase.VAR.(num2str(deblank(modelbase.names(modelbase.models(j),:))))(loc(modelbase.VARendo_names.(num2str(deblank(modelbase.names(modelbase.models(j),:)))),'interest'),loc(modelbase.VARendo_names.(num2str(deblank(modelbase.names(modelbase.models(j),:)))),'interest'));
+            unconditionalVariances(1) = var;
             st = sprintf('%9s %19f',...
                 vname,var);
             disp(st)
             %Plotting the variance of inflation
             vname='Inflation';
             var = modelbase.VAR.(num2str(deblank(modelbase.names(modelbase.models(j),:))))(loc(modelbase.VARendo_names.(num2str(deblank(modelbase.names(modelbase.models(j),:)))),'inflation'),loc(modelbase.VARendo_names.(num2str(deblank(modelbase.names(modelbase.models(j),:)))),'inflation'));
+            unconditionalVariances(2) = var;
             st = sprintf('%9s %19f',...
                 vname,var);
             disp(st)
             %Plotting the variance of outputgap
             vname='outputgap';
             var = modelbase.VAR.(num2str(deblank(modelbase.names(modelbase.models(j),:))))(loc(modelbase.VARendo_names.(num2str(deblank(modelbase.names(modelbase.models(j),:)))),'outputgap'),loc(modelbase.VARendo_names.(num2str(deblank(modelbase.names(modelbase.models(j),:)))),'outputgap'));
+            unconditionalVariances(3) = var;
             st = sprintf('%9s %19f',...
                 vname,var);
             disp(st)
@@ -299,10 +304,12 @@ if modelbase.option(5) == 1
                 %Plotting the variance of output
                 vname='output   ';
                 var = modelbase.VAR.(num2str(deblank(modelbase.names(modelbase.models(j),:))))(loc(modelbase.VARendo_names.(num2str(deblank(modelbase.names(modelbase.models(j),:)))),'output'),loc(modelbase.VARendo_names.(num2str(deblank(modelbase.names(modelbase.models(j),:)))),'output'));
+                unconditionalVariances(4) = var;
                 st = sprintf('%9s %19f',...
                     vname,var);
                 disp(st)
-            end;
+            end
+            csvwrite("../OUTPUT/variances.csv",unconditionalVariances);
         end;
     end;
 end;
@@ -310,6 +317,10 @@ statusbar(0, 'Busy...');
 %**********************************************************************************************************************
 %                    Set up figures, plot results                                                                     %
 %**********************************************************************************************************************
+
+% Commented out by @rishab to preserve time
+
+%{
 time = (0:modelbase.horizon)';
 if modelbase.option(2)==1
     for p=1:size(modelbase.innos,1)
@@ -469,6 +480,7 @@ end
 modelbase.totaltime = cputime-modelbase.totaltime;
 disp(' '); disp(' ');
 disp(['Total elapsed cputime: ' ,num2str(modelbase.totaltime), ' seconds.']);
+%}
 
 % save the results
 keyvariables = ['outputgap';

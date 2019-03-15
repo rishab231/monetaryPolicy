@@ -624,16 +624,6 @@ rule=zeros(Number_rule,1);
             % common_rule(rn,32) = 1;
             % common_rule(rn,33) = 0.25;
        
-            % Hawkins' PID Rule defined below
-            %common_rule(12,1) =  0; common_rule(12,2) = 0; common_rule(12,3) = 0; common_rule(12,4) = 0;
-            %common_rule(12,5) = 1.5/4; common_rule(12,6) = 1.5/4; common_rule(12,7) = 1.5/4; common_rule(12,8) = 1.5/4; common_rule(12,9) = 0;
-            %common_rule(12,10) = 0; common_rule(12,11) = 0; common_rule(12,12) = 0; common_rule(12,13) = 0;
-            %common_rule(12,14) = 0.5;common_rule(12,15) = 0; common_rule(12,16) = 0; common_rule(12,17) = 0; common_rule(12,18) = 0;
-            %common_rule(12,19) = 0; common_rule(12,20) = 0; common_rule(12,21) = 0; common_rule(12,22) = 0;
-            %common_rule(12,23) = 0; common_rule(12,24) = 0;common_rule(12,25) = 0;common_rule(12,26) = 0;common_rule(12, 27) = 0;
-            %common_rule(12,28) = 0; common_rule(12,29) = 0;common_rule(12,30) = 0;common_rule(12,31) = 0;
-            %common_rule(12,32) = 1;
-            %common_rule(12,33) = 0.25;
 %%
 data =[NaN 0 0 0;0 0 0 0;0 0 0 0;0 0 0 0;...
     0 0 0 0;NaN 0 0 0;NaN 0 0 0;NaN 0 0 0;NaN 0 0 0];
@@ -670,8 +660,8 @@ for j=1:33
     common_rule(12, j) = coefficients(j);
 end
 
-% Only using Model 1
-for j=modelStart:modelEnd
+% Only using Model #modelNumber
+for j=modelNumber:modelNumber
   modelsvec(j,1)=1;
 end
 for j=69:79 % Remove AL models.

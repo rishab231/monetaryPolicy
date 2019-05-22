@@ -1,0 +1,41 @@
+# Running the optimization 
+
+rVarTarget = 16.0 # Target rate variance from Williams paper.
+taylor_coeff = [1.5, 0, 0.5, 0] 
+hamilton_coeff = [1.42, -1.20, 0.5, -0.48]
+weights = np.arange(0, 1.01, .25) # Values for lambda
+interest_coeff = 1.0 # Coefficient on the interest_rate loss term
+
+mylambdatemp = 0.0 # Something to put in the lambda variable when calculating the target rate variance.
+
+# Run with Hamilton coefficients to generate target rate variance.
+myfoo = myPID(hamilton_coeff, mylambdatemp, interest_coeff, modelNum, rVarTarget)
+rVarTarget = unconditionalVariances()['interest'][0] # Assign target rate variance.
+print("The target rate variance is", rVarTarget)
+
+con = {'type': 'ineq',
+       'fun': lambda rateVariance: rVarTarget - rateVariance}
+
+# To store information
+PID_inflation_variances = []
+PID_output_gap_variances = []
+PID_interest_variances = []
+PID_loss_of_lambda = []
+PID_coefficients_array = []
+
+# Assuming starting interest_rate_variance to be 0
+rateVariance = 0
+
+# Starting with the Taylor rule coefficients
+#current_coeff = taylor_coeff
+
+# Starting with the Hamilton rule coefficients
+current_coeff = hamilton_coeff
+
+for lambda_value in weights:
+    #PID_result = scipy.optimize.minimize(myPID, current_coeff, \
+    #                            args=(lambda_value, interest_coeff, modelNum, rVarTarget), method='Nelder-Mead')
+    PID_result_cons = scipy.optimize.minimize(constrainedPID, current_coeff, \
+                            args=(rateVariance, lambda_value, interest_coeff, modelNum), \
+                            constraints=con)
+    break

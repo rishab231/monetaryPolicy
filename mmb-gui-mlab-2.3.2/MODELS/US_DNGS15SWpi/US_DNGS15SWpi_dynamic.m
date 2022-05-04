@@ -5,23 +5,25 @@ function [residual, g1, g2, g3] = US_DNGS15SWpi_dynamic(y, x, params, steady_sta
 % Inputs :
 %   y         [#dynamic variables by 1] double    vector of endogenous variables in the order stored
 %                                                 in M_.lead_lag_incidence; see the Manual
-%   x         [M_.exo_nbr by nperiods] double     matrix of exogenous variables (in declaration order)
+%   x         [nperiods by M_.exo_nbr] double     matrix of exogenous variables (in declaration order)
 %                                                 for all simulation periods
+%   steady_state  [M_.endo_nbr by 1] double       vector of steady state values
 %   params    [M_.param_nbr by 1] double          vector of parameter values in declaration order
 %   it_       scalar double                       time period for exogenous variables for which to evaluate the model
 %
 % Outputs:
 %   residual  [M_.endo_nbr by 1] double    vector of residuals of the dynamic model equations in order of 
-%                                          declaration of the equations
+%                                          declaration of the equations.
+%                                          Dynare may prepend auxiliary equations, see M_.aux_vars
 %   g1        [M_.endo_nbr by #dynamic variables] double    Jacobian matrix of the dynamic model equations;
 %                                                           rows: equations in order of declaration
-%                                                           columns: variables in order stored in M_.lead_lag_incidence
+%                                                           columns: variables in order stored in M_.lead_lag_incidence followed by the ones in M_.exo_names
 %   g2        [M_.endo_nbr by (#dynamic variables)^2] double   Hessian matrix of the dynamic model equations;
 %                                                              rows: equations in order of declaration
-%                                                              columns: variables in order stored in M_.lead_lag_incidence
+%                                                              columns: variables in order stored in M_.lead_lag_incidence followed by the ones in M_.exo_names
 %   g3        [M_.endo_nbr by (#dynamic variables)^3] double   Third order derivative matrix of the dynamic model equations;
 %                                                              rows: equations in order of declaration
-%                                                              columns: variables in order stored in M_.lead_lag_incidence
+%                                                              columns: variables in order stored in M_.lead_lag_incidence followed by the ones in M_.exo_names
 %
 %
 % Warning : this file is generated automatically by Dynare
@@ -32,7 +34,6 @@ function [residual, g1, g2, g3] = US_DNGS15SWpi_dynamic(y, x, params, steady_sta
 %
 
 residual = zeros(64, 1);
-T3 = (-1);
 T179 = (-(1-params(41)*exp((-params(67)))))/(params(50)*(1+params(41)*exp((-params(67)))));
 T185 = params(41)*exp((-params(67)))/(1+params(41)*exp((-params(67))));
 T191 = 1/(1+params(41)*exp((-params(67))));
@@ -251,6 +252,7 @@ if nargout >= 2,
   % Jacobian matrix
   %
 
+T3 = (-1);
   g1(1,36)=(-4);
   g1(1,70)=1;
   g1(2,2)=T3;
@@ -504,19 +506,20 @@ if nargout >= 2,
   g1(63,97)=1;
   g1(64,33)=T3;
   g1(64,98)=1;
-end
+
 if nargout >= 3,
   %
   % Hessian matrix
   %
 
   g2 = sparse([],[],[],64,16641);
-end
 if nargout >= 4,
   %
   % Third order derivatives
   %
 
   g3 = sparse([],[],[],64,2146689);
+end
+end
 end
 end
